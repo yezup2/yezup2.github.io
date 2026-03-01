@@ -1,0 +1,1780 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Personal homelab infrastructure documentation">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>NUT UPS Setup — Server Rack Documentation - Homelab Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#nut-ups-setup-server-rack-documentation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Homelab Documentation" class="md-header__button md-logo" aria-label="Homelab Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Homelab Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              NUT UPS Setup — Server Rack Documentation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Homelab Documentation" class="md-nav__button md-logo" aria-label="Homelab Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Homelab Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NUT UPS Setup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    NUT UPS Setup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nut/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nut/server.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NUT Server (Pi)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nut/clients.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NUT Clients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nut/homeassistant.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home Assistant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nut/proxmox.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Proxmox Shutdown Order
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardware Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shutdown-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shutdown Strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nut-server-raspberry-pi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NUT Server — Raspberry Pi
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NUT Server — Raspberry Pi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-install-nut" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Install NUT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-identify-the-ups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Identify the UPS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-configure-usb-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Configure USB Permissions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-etcnutnutconf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. /etc/nut/nut.conf
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-etcnutupsconf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. /etc/nut/ups.conf
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-etcnutupsdconf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. /etc/nut/upsd.conf
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-etcnutupsdusers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. /etc/nut/upsd.users
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-etcnutupsmonconf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. /etc/nut/upsmon.conf
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-start-nut" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Start NUT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-confirm-nut-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Confirm NUT Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nut-clients-debian-lxcs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NUT Clients — Debian LXCs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NUT Clients — Debian LXCs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-install-nut-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Install NUT Client
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-etcnutnutconf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. /etc/nut/nut.conf
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-etcnutupsmonconf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. /etc/nut/upsmon.conf
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-enable-and-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Enable and Start
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nut-clients-truenas-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NUT Clients — TrueNAS SCALE
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NUT Clients — TrueNAS SCALE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backup-truenas-stage-1-15-min-900s" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backup TrueNAS (Stage 1 — 15 min / 900s)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Backup TrueNAS (Stage 1 — 15 min / 900s)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-ssh-into-backup-truenas-and-create-the-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: SSH into Backup TrueNAS and create the script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-register-as-init-script-in-truenas-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Register as Init Script in TrueNAS UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#main-truenas-vm-stage-2-10-min-600s" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Main TrueNAS VM (Stage 2 — 10 min / 600s)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nut-client-proxmox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NUT Client — Proxmox
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NUT Client — Proxmox">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-install-nut-client_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Install NUT Client
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-etcnutnutconf_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. /etc/nut/nut.conf
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-etcnutupsmonconf_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. /etc/nut/upsmon.conf
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-enable-and-start_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Enable and Start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-protect-config-from-unattended-upgrades" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Protect Config from Unattended Upgrades
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nut-client-windows-winnut" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NUT Client — Windows (WinNUT)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NUT Client — Windows (WinNUT)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-install-winnut" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Install WinNUT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-configure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Configure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#home-assistant-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Home Assistant Integration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Home Assistant Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-the-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Add the Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enable-additional-entities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enable Additional Entities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#template-sensors-configurationyaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Template Sensors (configuration.yaml)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#home-assistant-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Home Assistant Dashboard
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Home Assistant Dashboard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-card-mod" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install card-mod
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-the-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create the Dashboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proxmox-vmlxc-startup-shutdown-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Proxmox VM/LXC Startup &amp; Shutdown Order
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#opnsense-firewall-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OPNsense Firewall Rule
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OPNsense Firewall Rule">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rule-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rule Settings
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="nut-ups-setup-server-rack-documentation">NUT UPS Setup — Server Rack Documentation<a class="headerlink" href="#nut-ups-setup-server-rack-documentation" title="Permanent link">&para;</a></h1>
+<p>This document covers the full setup of Network UPS Tools (NUT) for a MinuteMan UPS, including the NUT server on a Raspberry Pi, NUT clients on all machines, Home Assistant integration, and Proxmox shutdown/startup ordering.</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="#hardware-overview">Hardware Overview</a></li>
+<li><a href="#shutdown-strategy">Shutdown Strategy</a></li>
+<li><a href="#nut-server--raspberry-pi">NUT Server — Raspberry Pi</a></li>
+<li><a href="#nut-clients--debian-lxcs">NUT Clients — Debian LXCs</a></li>
+<li><a href="#nut-clients--truenas-scale">NUT Clients — TrueNAS SCALE</a></li>
+<li><a href="#nut-client--proxmox">NUT Client — Proxmox</a></li>
+<li><a href="#nut-client--windows-winnut">NUT Client — Windows (WinNUT)</a></li>
+<li><a href="#home-assistant-integration">Home Assistant Integration</a></li>
+<li><a href="#home-assistant-dashboard">Home Assistant Dashboard</a></li>
+<li><a href="#proxmox-vmlxc-startup--shutdown-order">Proxmox VM/LXC Startup &amp; Shutdown Order</a></li>
+<li><a href="#opnsense-firewall-rule">OPNsense Firewall Rule</a></li>
+</ol>
+<hr />
+<h2 id="hardware-overview">Hardware Overview<a class="headerlink" href="#hardware-overview" title="Permanent link">&para;</a></h2>
+<p><strong>UPS:</strong> MinuteMan Pro 1000 (1000VA / 700W)
+<strong>NUT Server:</strong> Raspberry Pi 3B running Raspberry Pi OS
+<strong>Connection:</strong> USB (UPS reports as Delta Electronics USB HID device)</p>
+<p><strong>Devices on UPS:</strong>
+- Main server (Proxmox host with TrueNAS VM, LXCs, and VMs)
+- Backup server (TrueNAS SCALE — also runs Proxmox Backup Server as a container)
+- Raspberry Pi (NUT server)
+- Router (OPNsense)
+- Brocade switch (PoE AP)</p>
+<blockquote>
+<p><strong>Note:</strong> The router and switch have no NUT client installed. They are intentionally left running until the battery is fully depleted to keep network communications alive between all NUT clients for as long as possible.</p>
+</blockquote>
+<hr />
+<h2 id="shutdown-strategy">Shutdown Strategy<a class="headerlink" href="#shutdown-strategy" title="Permanent link">&para;</a></h2>
+<p>NUT clients use <strong>runtime remaining</strong> as the shutdown trigger (more reliable than battery % on this UPS model). The UPS runtime estimate was validated during a live test.</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Machines</th>
+<th>Runtime Trigger</th>
+<th>Reasoning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>NFS/SMB client LXCs, qbit2 (Windows VM), Backup TrueNAS</td>
+<td>15 min (900s)</td>
+<td>Unmount shares before TrueNAS goes down</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Main TrueNAS VM</td>
+<td>10 min (600s)</td>
+<td>Shut down after dependents are clear</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Proxmox host + Raspberry Pi</td>
+<td>5 min (300s)</td>
+<td>Last machines off before network gear loses power</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Important:</strong> Treat 50% battery as effectively dead on this UPS — percentage readings are unreliable. Runtime remaining is the trustworthy metric.</p>
+</blockquote>
+<hr />
+<h2 id="nut-server-raspberry-pi">NUT Server — Raspberry Pi<a class="headerlink" href="#nut-server-raspberry-pi" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>Credit:</strong> This section is based on Jeff Geerling's guide: https://www.jeffgeerling.com/blog/2025/nut-on-my-pi-so-my-servers-dont-die/
+Follow Jeff's guide through the "Confirm NUT works" step. Key commands and config snippets are reproduced below for completeness.</p>
+</blockquote>
+<h3 id="1-install-nut">1. Install NUT<a class="headerlink" href="#1-install-nut" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>nut
+</code></pre></div>
+<h3 id="2-identify-the-ups">2. Identify the UPS<a class="headerlink" href="#2-identify-the-ups" title="Permanent link">&para;</a></h3>
+<p>Plug in the UPS via USB, then run:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>lsusb
+</code></pre></div>
+<p>Look for a Delta Electronics entry (MinuteMan rebrands from Delta). Note the VID:PID values.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>nut-scanner<span class="w"> </span>-U
+</code></pre></div>
+<p>This will suggest a config block for your UPS.</p>
+<h3 id="3-configure-usb-permissions">3. Configure USB Permissions<a class="headerlink" href="#3-configure-usb-permissions" title="Permanent link">&para;</a></h3>
+<p>Create a udev rule so NUT can access the USB device:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>nano<span class="w"> </span>/etc/udev/rules.d/99-nut-ups.rules
+</code></pre></div>
+<p>Add (replace VID with your actual vendor ID from lsusb, e.g. <code>05dd</code>):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>SUBSYSTEM==&quot;usb&quot;, ATTR{idVendor}==&quot;&lt;your-vendor-id&gt;&quot;, MODE=&quot;0664&quot;, GROUP=&quot;nut&quot;
+</code></pre></div>
+<p>Reload udev:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>udevadm<span class="w"> </span>control<span class="w"> </span>--reload-rules
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>sudo<span class="w"> </span>udevadm<span class="w"> </span>trigger
+</code></pre></div>
+<p>Add the nut user to the dialout group:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>dialout<span class="w"> </span>nut
+</code></pre></div>
+<h3 id="4-etcnutnutconf">4. <code>/etc/nut/nut.conf</code><a class="headerlink" href="#4-etcnutnutconf" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="na">MODE</span><span class="o">=</span><span class="s">netserver</span>
+</code></pre></div>
+<h3 id="5-etcnutupsconf">5. <code>/etc/nut/ups.conf</code><a class="headerlink" href="#5-etcnutupsconf" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">[minuteman]</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="na">driver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">usbhid-ups</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="na">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">auto</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span><span class="na">vendorid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&lt;your-vendor-id&gt;</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="na">productid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&lt;your-product-id&gt;</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">  </span><span class="na">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;MinuteMan UPS&quot;</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">  </span><span class="na">override.battery.runtime.low</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">900</span>
+</code></pre></div>
+<h3 id="6-etcnutupsdconf">6. <code>/etc/nut/upsd.conf</code><a class="headerlink" href="#6-etcnutupsdconf" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="na">LISTEN 127.0.0.1 3493</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="na">LISTEN 0.0.0.0 3493</span>
+</code></pre></div>
+<h3 id="7-etcnutupsdusers">7. <code>/etc/nut/upsd.users</code><a class="headerlink" href="#7-etcnutupsdusers" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">[admin]</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="na">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&lt;admin-password&gt;</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="na">upsmon master</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="k">[observer]</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">  </span><span class="na">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&lt;observer-password&gt;</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">  </span><span class="na">upsmon slave</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Security:</strong> Use strong unique passwords. The <code>observer</code> user is used by all remote NUT clients. The <code>admin</code> user is for the Pi itself.</p>
+</blockquote>
+<h3 id="8-etcnutupsmonconf">8. <code>/etc/nut/upsmon.conf</code><a class="headerlink" href="#8-etcnutupsmonconf" title="Permanent link">&para;</a></h3>
+<p>Find and update these two lines in the existing file (do not replace the whole file):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="na">MONITOR minuteman@localhost 1 admin &lt;admin-password&gt; primary</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="na">FINALDELAY 180</span>
+</code></pre></div>
+<blockquote>
+<p><code>FINALDELAY 180</code> gives all client machines 3 minutes to finish shutting down before the Pi powers off and the UPS cuts its load.</p>
+</blockquote>
+<h3 id="9-start-nut">9. Start NUT<a class="headerlink" href="#9-start-nut" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>nut-server<span class="w"> </span>nut-driver<span class="w"> </span>nut-monitor
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>nut-server<span class="w"> </span>nut-driver<span class="w"> </span>nut-monitor
+</code></pre></div>
+<h3 id="10-confirm-nut-works">10. Confirm NUT Works<a class="headerlink" href="#10-confirm-nut-works" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>upsc<span class="w"> </span>minuteman@localhost
+</code></pre></div>
+<p>You should see a full list of UPS variables. Verify <code>ups.status</code> shows <code>OL</code> (on line).</p>
+<hr />
+<h2 id="nut-clients-debian-lxcs">NUT Clients — Debian LXCs<a class="headerlink" href="#nut-clients-debian-lxcs" title="Permanent link">&para;</a></h2>
+<p><strong>Applies to:</strong> sonarr, radarr, qbittorrent, immich, and any other Debian-based LXC that mounts a TrueNAS share.</p>
+<p><strong>Shutdown threshold:</strong> 15 minutes runtime remaining (Stage 1)</p>
+<h3 id="1-install-nut-client">1. Install NUT Client<a class="headerlink" href="#1-install-nut-client" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>nut-client<span class="w"> </span>-y
+</code></pre></div>
+<h3 id="2-etcnutnutconf">2. <code>/etc/nut/nut.conf</code><a class="headerlink" href="#2-etcnutnutconf" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;MODE=netclient&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/nut/nut.conf
+</code></pre></div>
+<h3 id="3-etcnutupsmonconf">3. <code>/etc/nut/upsmon.conf</code><a class="headerlink" href="#3-etcnutupsmonconf" title="Permanent link">&para;</a></h3>
+<p>Replace the entire file contents with:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="na">MONITOR minuteman@&lt;pi-ip&gt; 1 observer &lt;observer-password&gt; slave</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="na">MINSUPPLIES 1</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="na">SHUTDOWNCMD &quot;/sbin/shutdown -h now&quot;</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="na">POLLFREQ 5</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="na">POLLFREQALERT 5</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="na">HOSTSYNC 15</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="na">DEADTIME 15</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="na">RBWARNTIME 43200</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="na">NOCOMMWARNTIME 300</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="na">FINALDELAY 5</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="na">BATTERY_RUNTIME_LOW 900</span>
+</code></pre></div>
+<h3 id="4-enable-and-start">4. Enable and Start<a class="headerlink" href="#4-enable-and-start" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>nut-monitor
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>nut-monitor
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>nut-monitor
+</code></pre></div>
+<p>Confirm you see <code>Active: active (running)</code>. Then verify connection:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>sudo<span class="w"> </span>tail<span class="w"> </span>-f<span class="w"> </span>/var/log/syslog<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>ups
+</code></pre></div>
+<p>You should see <code>on line power</code> within 10-15 seconds.</p>
+<hr />
+<h2 id="nut-clients-truenas-scale">NUT Clients — TrueNAS SCALE<a class="headerlink" href="#nut-clients-truenas-scale" title="Permanent link">&para;</a></h2>
+<p>TrueNAS SCALE uses an immutable OS image that gets replaced on updates. NUT config must be written via an <strong>Init/Shutdown Script</strong> stored on the data pool to survive updates.</p>
+<h3 id="backup-truenas-stage-1-15-min-900s">Backup TrueNAS (Stage 1 — 15 min / 900s)<a class="headerlink" href="#backup-truenas-stage-1-15-min-900s" title="Permanent link">&para;</a></h3>
+<h4 id="step-1-ssh-into-backup-truenas-and-create-the-script">Step 1: SSH into Backup TrueNAS and create the script<a class="headerlink" href="#step-1-ssh-into-backup-truenas-and-create-the-script" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/mnt/&lt;your-pool-name&gt;/configs
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>nano<span class="w"> </span>/mnt/&lt;your-pool-name&gt;/configs/nut-setup.sh
+</code></pre></div>
+<p>Paste:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="ch">#!/bin/bash</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;MODE=netclient&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/etc/nut/nut.conf
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>cat<span class="w"> </span>&gt;<span class="w"> </span>/etc/nut/upsmon.conf<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39;</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="s">MONITOR minuteman@&lt;pi-ip&gt; 1 observer &lt;observer-password&gt; slave</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="s">MINSUPPLIES 1</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="s">SHUTDOWNCMD &quot;/sbin/shutdown -h now&quot;</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="s">POLLFREQ 5</span>
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="s">POLLFREQALERT 5</span>
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="s">HOSTSYNC 15</span>
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="s">DEADTIME 15</span>
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="s">RBWARNTIME 43200</span>
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a><span class="s">NOCOMMWARNTIME 300</span>
+<a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a><span class="s">FINALDELAY 5</span>
+<a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a><span class="s">BATTERY_RUNTIME_LOW 900</span>
+<a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a><span class="s">EOF</span>
+<a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>
+<a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a>systemctl<span class="w"> </span>restart<span class="w"> </span>nut-monitor
+</code></pre></div>
+<p>Make it executable:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>chmod<span class="w"> </span>+x<span class="w"> </span>/mnt/&lt;your-pool-name&gt;/configs/nut-setup.sh
+</code></pre></div>
+<h4 id="step-2-register-as-init-script-in-truenas-ui">Step 2: Register as Init Script in TrueNAS UI<a class="headerlink" href="#step-2-register-as-init-script-in-truenas-ui" title="Permanent link">&para;</a></h4>
+<p>Go to <strong>System → Advanced → Init/Shutdown Scripts → Add</strong>:</p>
+<ul>
+<li><strong>Description:</strong> NUT Client Setup</li>
+<li><strong>Type:</strong> Script</li>
+<li><strong>Script:</strong> <code>/mnt/&lt;your-pool-name&gt;/configs/nut-setup.sh</code></li>
+<li><strong>When:</strong> Post Init</li>
+<li><strong>Enabled:</strong> ✓</li>
+</ul>
+<blockquote>
+<p><strong>Note:</strong> Disable the built-in TrueNAS NUT service under <strong>System → NUT</strong> to avoid conflicts.</p>
+</blockquote>
+<hr />
+<h3 id="main-truenas-vm-stage-2-10-min-600s">Main TrueNAS VM (Stage 2 — 10 min / 600s)<a class="headerlink" href="#main-truenas-vm-stage-2-10-min-600s" title="Permanent link">&para;</a></h3>
+<p>Same process as Backup TrueNAS but with a different runtime threshold:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="ch">#!/bin/bash</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;MODE=netclient&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/etc/nut/nut.conf
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>cat<span class="w"> </span>&gt;<span class="w"> </span>/etc/nut/upsmon.conf<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39;</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="s">MONITOR minuteman@&lt;pi-ip&gt; 1 observer &lt;observer-password&gt; slave</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="s">MINSUPPLIES 1</span>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="s">SHUTDOWNCMD &quot;/sbin/shutdown -h now&quot;</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="s">POLLFREQ 5</span>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="s">POLLFREQALERT 5</span>
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="s">HOSTSYNC 15</span>
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a><span class="s">DEADTIME 15</span>
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a><span class="s">RBWARNTIME 43200</span>
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a><span class="s">NOCOMMWARNTIME 300</span>
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a><span class="s">FINALDELAY 5</span>
+<a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a><span class="s">BATTERY_RUNTIME_LOW 600</span>
+<a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a><span class="s">EOF</span>
+<a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a>
+<a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a>systemctl<span class="w"> </span>restart<span class="w"> </span>nut-monitor
+</code></pre></div>
+<p>Register in TrueNAS UI the same way under <strong>System → Advanced → Init/Shutdown Scripts</strong>.</p>
+<blockquote>
+<p><strong>Note:</strong> Proxmox Backup Server running as a TrueNAS SCALE app/container does <strong>not</strong> need its own NUT client. TrueNAS SCALE automatically stops all running apps gracefully as part of its own shutdown sequence.</p>
+</blockquote>
+<hr />
+<h2 id="nut-client-proxmox">NUT Client — Proxmox<a class="headerlink" href="#nut-client-proxmox" title="Permanent link">&para;</a></h2>
+<p>Proxmox is Debian-based and config files in <code>/etc</code> survive <code>apt</code> updates. If <code>apt</code> asks whether to keep your config file during a NUT package update, answer <strong>N</strong> (keep existing).</p>
+<p><strong>Shutdown threshold:</strong> 5 minutes runtime remaining (Stage 3)</p>
+<h3 id="1-install-nut-client_1">1. Install NUT Client<a class="headerlink" href="#1-install-nut-client_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>nut-client<span class="w"> </span>-y
+</code></pre></div>
+<h3 id="2-etcnutnutconf_1">2. <code>/etc/nut/nut.conf</code><a class="headerlink" href="#2-etcnutnutconf_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;MODE=netclient&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/nut/nut.conf
+</code></pre></div>
+<h3 id="3-etcnutupsmonconf_1">3. <code>/etc/nut/upsmon.conf</code><a class="headerlink" href="#3-etcnutupsmonconf_1" title="Permanent link">&para;</a></h3>
+<p>Replace the entire file with:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="na">MONITOR minuteman@&lt;pi-ip&gt; 1 observer &lt;observer-password&gt; slave</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="na">MINSUPPLIES 1</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="na">SHUTDOWNCMD &quot;/sbin/shutdown -h now&quot;</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="na">POLLFREQ 5</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="na">POLLFREQALERT 5</span>
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="na">HOSTSYNC 15</span>
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="na">DEADTIME 15</span>
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="na">RBWARNTIME 43200</span>
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="na">NOCOMMWARNTIME 300</span>
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a><span class="na">FINALDELAY 5</span>
+<a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="na">BATTERY_RUNTIME_LOW 300</span>
+</code></pre></div>
+<h3 id="4-enable-and-start_1">4. Enable and Start<a class="headerlink" href="#4-enable-and-start_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>nut-monitor
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>nut-monitor
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>nut-monitor
+</code></pre></div>
+<h3 id="5-protect-config-from-unattended-upgrades">5. Protect Config from Unattended Upgrades<a class="headerlink" href="#5-protect-config-from-unattended-upgrades" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>sudo<span class="w"> </span>nano<span class="w"> </span>/etc/apt/apt.conf.d/50unattended-upgrades
+</code></pre></div>
+<p>Add inside the <code>Dpkg::Options</code> section:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>Dpkg::Options:: &quot;--force-confold&quot;;
+</code></pre></div>
+<hr />
+<h2 id="nut-client-windows-winnut">NUT Client — Windows (WinNUT)<a class="headerlink" href="#nut-client-windows-winnut" title="Permanent link">&para;</a></h2>
+<p><strong>Applies to:</strong> qbit2 Windows VM (Stage 1 — 15 min / 900s)</p>
+<h3 id="1-install-winnut">1. Install WinNUT<a class="headerlink" href="#1-install-winnut" title="Permanent link">&para;</a></h3>
+<p>Download and install WinNUT from: https://github.com/gawindx/WinNUT-Client</p>
+<h3 id="2-configure">2. Configure<a class="headerlink" href="#2-configure" title="Permanent link">&para;</a></h3>
+<p>In the WinNUT configuration UI set:</p>
+<ul>
+<li><strong>UPS Host:</strong> <code>&lt;pi-ip&gt;</code></li>
+<li><strong>Port:</strong> <code>3493</code></li>
+<li><strong>UPS Name:</strong> <code>minuteman</code></li>
+<li><strong>Username:</strong> <code>observer</code></li>
+<li><strong>Password:</strong> <code>&lt;observer-password&gt;</code></li>
+<li><strong>Shutdown threshold:</strong> 15 minutes runtime remaining</li>
+</ul>
+<blockquote>
+<p>WinNUT handles the Windows shutdown command internally — no manual <code>SHUTDOWNCMD</code> editing required.</p>
+</blockquote>
+<hr />
+<h2 id="home-assistant-integration">Home Assistant Integration<a class="headerlink" href="#home-assistant-integration" title="Permanent link">&para;</a></h2>
+<p>Home Assistant connects to NUT as a <strong>slave client</strong> over the network.</p>
+<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
+<ul>
+<li>HA and the Pi must be able to reach each other on port <code>3493</code></li>
+<li>If on different VLANs, add an OPNsense firewall rule (see <a href="#opnsense-firewall-rule">OPNsense Firewall Rule</a>)</li>
+</ul>
+<h3 id="add-the-integration">Add the Integration<a class="headerlink" href="#add-the-integration" title="Permanent link">&para;</a></h3>
+<p>Go to <strong>Settings → Devices &amp; Services → Add Integration → Network UPS Tool (NUT)</strong>:</p>
+<ul>
+<li><strong>Host:</strong> <code>&lt;pi-ip&gt;</code></li>
+<li><strong>Port:</strong> <code>3493</code></li>
+<li><strong>Username:</strong> <code>observer</code></li>
+<li><strong>Password:</strong> <code>&lt;observer-password&gt;</code></li>
+</ul>
+<h3 id="enable-additional-entities">Enable Additional Entities<a class="headerlink" href="#enable-additional-entities" title="Permanent link">&para;</a></h3>
+<p>By default HA only enables a few NUT sensors. Go to <strong>Settings → Devices &amp; Services → NUT → your UPS device</strong> and enable:</p>
+<ul>
+<li><code>sensor.minuteman_load</code></li>
+<li><code>sensor.minuteman_battery_runtime</code></li>
+<li><code>sensor.minuteman_battery_voltage</code></li>
+<li><code>sensor.minuteman_input_voltage</code></li>
+<li><code>sensor.minuteman_output_voltage</code></li>
+<li><code>sensor.minuteman_nominal_power</code></li>
+<li><code>sensor.minuteman_status_data</code></li>
+</ul>
+<h3 id="template-sensors-configurationyaml">Template Sensors (<code>configuration.yaml</code>)<a class="headerlink" href="#template-sensors-configurationyaml" title="Permanent link">&para;</a></h3>
+<p>Add the following to <code>/config/configuration.yaml</code> on your HA instance. Access via <strong>Settings → Add-ons → File Editor</strong> or SSH.</p>
+<p>{% raw %}
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="nt">template</span><span class="p">:</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">sensor</span><span class="p">:</span>
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Minuteman</span><span class="nv"> </span><span class="s">Output</span><span class="nv"> </span><span class="s">Wattage&quot;</span>
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">        </span><span class="nt">unique_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minuteman_output_wattage</span>
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="w">        </span><span class="nt">unit_of_measurement</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;W&quot;</span>
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="w">        </span><span class="nt">state_class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">measurement</span>
+<a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a><span class="w">        </span><span class="nt">device_class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">power</span>
+<a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a><span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">(states(&#39;sensor.minuteman_load&#39;)</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">float(0)</span><span class="nv"> </span><span class="s">/</span><span class="nv"> </span><span class="s">100</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">700)</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">round(1)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>
+<a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Minuteman</span><span class="nv"> </span><span class="s">Runtime</span><span class="nv"> </span><span class="s">Formatted&quot;</span>
+<a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a><span class="w">        </span><span class="nt">unique_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minuteman_runtime_formatted</span>
+<a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a><span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
+<a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a><span class="w">          </span><span class="no">{% set seconds = states(&#39;sensor.minuteman_battery_runtime&#39;) | int(0) %}</span>
+<a id="__codelineno-29-14" name="__codelineno-29-14" href="#__codelineno-29-14"></a><span class="w">          </span><span class="no">{% set m = (seconds // 60) %}</span>
+<a id="__codelineno-29-15" name="__codelineno-29-15" href="#__codelineno-29-15"></a><span class="w">          </span><span class="no">{% set s = (seconds % 60) %}</span>
+<a id="__codelineno-29-16" name="__codelineno-29-16" href="#__codelineno-29-16"></a><span class="w">          </span><span class="no">{{ m }}m {{ s }}s</span>
+<a id="__codelineno-29-17" name="__codelineno-29-17" href="#__codelineno-29-17"></a>
+<a id="__codelineno-29-18" name="__codelineno-29-18" href="#__codelineno-29-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Minuteman</span><span class="nv"> </span><span class="s">Instantaneous</span><span class="nv"> </span><span class="s">Cost&quot;</span>
+<a id="__codelineno-29-19" name="__codelineno-29-19" href="#__codelineno-29-19"></a><span class="w">        </span><span class="nt">unique_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minuteman_instantaneous_cost</span>
+<a id="__codelineno-29-20" name="__codelineno-29-20" href="#__codelineno-29-20"></a><span class="w">        </span><span class="nt">unit_of_measurement</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$/hr&quot;</span>
+<a id="__codelineno-29-21" name="__codelineno-29-21" href="#__codelineno-29-21"></a><span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">(states(&#39;sensor.minuteman_output_wattage&#39;)</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">float(0)</span><span class="nv"> </span><span class="s">/</span><span class="nv"> </span><span class="s">1000</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">0.13)</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">round(4)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-29-22" name="__codelineno-29-22" href="#__codelineno-29-22"></a>
+<a id="__codelineno-29-23" name="__codelineno-29-23" href="#__codelineno-29-23"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Minuteman</span><span class="nv"> </span><span class="s">24h</span><span class="nv"> </span><span class="s">Cost&quot;</span>
+<a id="__codelineno-29-24" name="__codelineno-29-24" href="#__codelineno-29-24"></a><span class="w">        </span><span class="nt">unique_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minuteman_24h_cost</span>
+<a id="__codelineno-29-25" name="__codelineno-29-25" href="#__codelineno-29-25"></a><span class="w">        </span><span class="nt">unit_of_measurement</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$&quot;</span>
+<a id="__codelineno-29-26" name="__codelineno-29-26" href="#__codelineno-29-26"></a><span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">(states(&#39;sensor.minuteman_energy_24h&#39;)</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">float(0)</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">0.13)</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">round(4)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-29-27" name="__codelineno-29-27" href="#__codelineno-29-27"></a>
+<a id="__codelineno-29-28" name="__codelineno-29-28" href="#__codelineno-29-28"></a><span class="nt">sensor</span><span class="p">:</span>
+<a id="__codelineno-29-29" name="__codelineno-29-29" href="#__codelineno-29-29"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integration</span>
+<a id="__codelineno-29-30" name="__codelineno-29-30" href="#__codelineno-29-30"></a><span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.minuteman_output_wattage</span>
+<a id="__codelineno-29-31" name="__codelineno-29-31" href="#__codelineno-29-31"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minuteman_energy_kwh</span>
+<a id="__codelineno-29-32" name="__codelineno-29-32" href="#__codelineno-29-32"></a><span class="w">    </span><span class="nt">unit_prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k</span>
+<a id="__codelineno-29-33" name="__codelineno-29-33" href="#__codelineno-29-33"></a><span class="w">    </span><span class="nt">round</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<a id="__codelineno-29-34" name="__codelineno-29-34" href="#__codelineno-29-34"></a><span class="w">    </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trapezoidal</span>
+<a id="__codelineno-29-35" name="__codelineno-29-35" href="#__codelineno-29-35"></a>
+<a id="__codelineno-29-36" name="__codelineno-29-36" href="#__codelineno-29-36"></a><span class="nt">utility_meter</span><span class="p">:</span>
+<a id="__codelineno-29-37" name="__codelineno-29-37" href="#__codelineno-29-37"></a><span class="w">  </span><span class="nt">minuteman_energy_24h</span><span class="p">:</span>
+<a id="__codelineno-29-38" name="__codelineno-29-38" href="#__codelineno-29-38"></a><span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.minuteman_energy_kwh</span>
+<a id="__codelineno-29-39" name="__codelineno-29-39" href="#__codelineno-29-39"></a><span class="w">    </span><span class="nt">cycle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">daily</span>
+</code></pre></div>
+{% endraw %}</p>
+<blockquote>
+<p><strong>Note:</strong> Update <code>0.13</code> to your actual cost per kWh. Update <code>700</code> if your UPS wattage rating differs.
+The 24h cost sensor starts at $0.00 on first setup and resets at midnight each day.</p>
+</blockquote>
+<p>After saving, go to <strong>Developer Tools → YAML → Check Configuration</strong> then restart HA.</p>
+<hr />
+<h2 id="home-assistant-dashboard">Home Assistant Dashboard<a class="headerlink" href="#home-assistant-dashboard" title="Permanent link">&para;</a></h2>
+<p>This dashboard requires the <strong>card-mod</strong> custom component installed via HACS.</p>
+<h3 id="install-card-mod">Install card-mod<a class="headerlink" href="#install-card-mod" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Go to <strong>HACS</strong> in the HA sidebar</li>
+<li>Search for <strong>card-mod</strong></li>
+<li>Click <strong>Download</strong></li>
+<li>Restart HA via <strong>Developer Tools → YAML → Restart</strong></li>
+</ol>
+<h3 id="create-the-dashboard">Create the Dashboard<a class="headerlink" href="#create-the-dashboard" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Go to <strong>Settings → Dashboards → Add Dashboard</strong></li>
+<li>Name it <code>UPS</code>, choose an icon, click <strong>Create</strong></li>
+<li>Navigate to the new dashboard</li>
+<li>Click the <strong>pencil icon</strong> → <strong>three dot menu</strong> → <strong>Edit in YAML</strong></li>
+<li>Replace all contents with the YAML below and click <strong>Save</strong></li>
+</ol>
+<blockquote>
+<p><strong>Note:</strong> This dashboard uses the <strong>Masonry</strong> view type. If you created the dashboard with the Sections layout, change it via the pencil icon next to the view name → <strong>View type → Masonry</strong>.</p>
+</blockquote>
+<p>{% raw %}
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="nt">views</span><span class="p">:</span>
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">UPS</span>
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ups</span>
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="w">    </span><span class="nt">cards</span><span class="p">:</span>
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">grid</span>
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="w">        </span><span class="nt">columns</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="w">        </span><span class="nt">cards</span><span class="p">:</span>
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gauge</span>
+<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a><span class="w">            </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.minuteman_battery_charge</span>
+<a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a><span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Battery Charge</span>
+<a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a><span class="w">            </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;%&quot;</span>
+<a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a><span class="w">            </span><span class="nt">min</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a><span class="w">            </span><span class="nt">max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a><span class="w">            </span><span class="nt">severity</span><span class="p">:</span>
+<a id="__codelineno-30-15" name="__codelineno-30-15" href="#__codelineno-30-15"></a><span class="w">              </span><span class="nt">green</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+<a id="__codelineno-30-16" name="__codelineno-30-16" href="#__codelineno-30-16"></a><span class="w">              </span><span class="nt">yellow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+<a id="__codelineno-30-17" name="__codelineno-30-17" href="#__codelineno-30-17"></a><span class="w">              </span><span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<a id="__codelineno-30-18" name="__codelineno-30-18" href="#__codelineno-30-18"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gauge</span>
+<a id="__codelineno-30-19" name="__codelineno-30-19" href="#__codelineno-30-19"></a><span class="w">            </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.minuteman_load</span>
+<a id="__codelineno-30-20" name="__codelineno-30-20" href="#__codelineno-30-20"></a><span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">UPS Load</span>
+<a id="__codelineno-30-21" name="__codelineno-30-21" href="#__codelineno-30-21"></a><span class="w">            </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;%&quot;</span>
+<a id="__codelineno-30-22" name="__codelineno-30-22" href="#__codelineno-30-22"></a><span class="w">            </span><span class="nt">min</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<a id="__codelineno-30-23" name="__codelineno-30-23" href="#__codelineno-30-23"></a><span class="w">            </span><span class="nt">max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<a id="__codelineno-30-24" name="__codelineno-30-24" href="#__codelineno-30-24"></a><span class="w">            </span><span class="nt">severity</span><span class="p">:</span>
+<a id="__codelineno-30-25" name="__codelineno-30-25" href="#__codelineno-30-25"></a><span class="w">              </span><span class="nt">green</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<a id="__codelineno-30-26" name="__codelineno-30-26" href="#__codelineno-30-26"></a><span class="w">              </span><span class="nt">yellow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">70</span>
+<a id="__codelineno-30-27" name="__codelineno-30-27" href="#__codelineno-30-27"></a><span class="w">              </span><span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">90</span>
+<a id="__codelineno-30-28" name="__codelineno-30-28" href="#__codelineno-30-28"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gauge</span>
+<a id="__codelineno-30-29" name="__codelineno-30-29" href="#__codelineno-30-29"></a><span class="w">            </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.minuteman_output_wattage</span>
+<a id="__codelineno-30-30" name="__codelineno-30-30" href="#__codelineno-30-30"></a><span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Output Watts</span>
+<a id="__codelineno-30-31" name="__codelineno-30-31" href="#__codelineno-30-31"></a><span class="w">            </span><span class="nt">min</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<a id="__codelineno-30-32" name="__codelineno-30-32" href="#__codelineno-30-32"></a><span class="w">            </span><span class="nt">max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">700</span>
+<a id="__codelineno-30-33" name="__codelineno-30-33" href="#__codelineno-30-33"></a><span class="w">            </span><span class="nt">severity</span><span class="p">:</span>
+<a id="__codelineno-30-34" name="__codelineno-30-34" href="#__codelineno-30-34"></a><span class="w">              </span><span class="nt">green</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<a id="__codelineno-30-35" name="__codelineno-30-35" href="#__codelineno-30-35"></a><span class="w">              </span><span class="nt">yellow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span>
+<a id="__codelineno-30-36" name="__codelineno-30-36" href="#__codelineno-30-36"></a><span class="w">              </span><span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">620</span>
+<a id="__codelineno-30-37" name="__codelineno-30-37" href="#__codelineno-30-37"></a>
+<a id="__codelineno-30-38" name="__codelineno-30-38" href="#__codelineno-30-38"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">grid</span>
+<a id="__codelineno-30-39" name="__codelineno-30-39" href="#__codelineno-30-39"></a><span class="w">        </span><span class="nt">columns</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<a id="__codelineno-30-40" name="__codelineno-30-40" href="#__codelineno-30-40"></a><span class="w">        </span><span class="nt">cards</span><span class="p">:</span>
+<a id="__codelineno-30-41" name="__codelineno-30-41" href="#__codelineno-30-41"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">entity</span>
+<a id="__codelineno-30-42" name="__codelineno-30-42" href="#__codelineno-30-42"></a><span class="w">            </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.minuteman_status</span>
+<a id="__codelineno-30-43" name="__codelineno-30-43" href="#__codelineno-30-43"></a><span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Power Source</span>
+<a id="__codelineno-30-44" name="__codelineno-30-44" href="#__codelineno-30-44"></a><span class="w">            </span><span class="nt">icon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mdi:power-plug</span>
+<a id="__codelineno-30-45" name="__codelineno-30-45" href="#__codelineno-30-45"></a><span class="w">            </span><span class="nt">card_mod</span><span class="p">:</span>
+<a id="__codelineno-30-46" name="__codelineno-30-46" href="#__codelineno-30-46"></a><span class="w">              </span><span class="nt">style</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-30-47" name="__codelineno-30-47" href="#__codelineno-30-47"></a><span class="w">                </span><span class="no">ha-card {</span>
+<a id="__codelineno-30-48" name="__codelineno-30-48" href="#__codelineno-30-48"></a><span class="w">                  </span><span class="no">background-color: {{ &#39;rgba(0, 180, 0, 0.3)&#39; if is_state(&#39;sensor.minuteman_status&#39;, &#39;Online&#39;) else &#39;rgba(180, 0, 0, 0.3)&#39; }};</span>
+<a id="__codelineno-30-49" name="__codelineno-30-49" href="#__codelineno-30-49"></a><span class="w">                  </span><span class="no">border: 2px solid {{ &#39;rgba(0, 180, 0, 0.8)&#39; if is_state(&#39;sensor.minuteman_status&#39;, &#39;Online&#39;) else &#39;rgba(180, 0, 0, 0.8)&#39; }};</span>
+<a id="__codelineno-30-50" name="__codelineno-30-50" href="#__codelineno-30-50"></a><span class="w">                </span><span class="no">}</span>
+<a id="__codelineno-30-51" name="__codelineno-30-51" href="#__codelineno-30-51"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">entity</span>
+<a id="__codelineno-30-52" name="__codelineno-30-52" href="#__codelineno-30-52"></a><span class="w">            </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.minuteman_runtime_formatted</span>
+<a id="__codelineno-30-53" name="__codelineno-30-53" href="#__codelineno-30-53"></a><span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Runtime Remaining</span>
+<a id="__codelineno-30-54" name="__codelineno-30-54" href="#__codelineno-30-54"></a><span class="w">            </span><span class="nt">icon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mdi:timer-outline</span>
+<a id="__codelineno-30-55" name="__codelineno-30-55" href="#__codelineno-30-55"></a>
+<a id="__codelineno-30-56" name="__codelineno-30-56" href="#__codelineno-30-56"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">grid</span>
+<a id="__codelineno-30-57" name="__codelineno-30-57" href="#__codelineno-30-57"></a><span class="w">        </span><span class="nt">columns</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<a id="__codelineno-30-58" name="__codelineno-30-58" href="#__codelineno-30-58"></a><span class="w">        </span><span class="nt">cards</span><span class="p">:</span>
+<a id="__codelineno-30-59" name="__codelineno-30-59" href="#__codelineno-30-59"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">entity</span>
+<a id="__codelineno-30-60" name="__codelineno-30-60" href="#__codelineno-30-60"></a><span class="w">            </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.minuteman_instantaneous_cost</span>
+<a id="__codelineno-30-61" name="__codelineno-30-61" href="#__codelineno-30-61"></a><span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Current Cost Rate</span>
+<a id="__codelineno-30-62" name="__codelineno-30-62" href="#__codelineno-30-62"></a><span class="w">            </span><span class="nt">icon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mdi:currency-usd</span>
+<a id="__codelineno-30-63" name="__codelineno-30-63" href="#__codelineno-30-63"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">entity</span>
+<a id="__codelineno-30-64" name="__codelineno-30-64" href="#__codelineno-30-64"></a><span class="w">            </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.minuteman_24h_cost</span>
+<a id="__codelineno-30-65" name="__codelineno-30-65" href="#__codelineno-30-65"></a><span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cost Today</span>
+<a id="__codelineno-30-66" name="__codelineno-30-66" href="#__codelineno-30-66"></a><span class="w">            </span><span class="nt">icon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mdi:cash-clock</span>
+<a id="__codelineno-30-67" name="__codelineno-30-67" href="#__codelineno-30-67"></a>
+<a id="__codelineno-30-68" name="__codelineno-30-68" href="#__codelineno-30-68"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">grid</span>
+<a id="__codelineno-30-69" name="__codelineno-30-69" href="#__codelineno-30-69"></a><span class="w">        </span><span class="nt">columns</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<a id="__codelineno-30-70" name="__codelineno-30-70" href="#__codelineno-30-70"></a><span class="w">        </span><span class="nt">cards</span><span class="p">:</span>
+<a id="__codelineno-30-71" name="__codelineno-30-71" href="#__codelineno-30-71"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">entities</span>
+<a id="__codelineno-30-72" name="__codelineno-30-72" href="#__codelineno-30-72"></a><span class="w">            </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">UPS Information</span>
+<a id="__codelineno-30-73" name="__codelineno-30-73" href="#__codelineno-30-73"></a><span class="w">            </span><span class="nt">entities</span><span class="p">:</span>
+<a id="__codelineno-30-74" name="__codelineno-30-74" href="#__codelineno-30-74"></a><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.minuteman_nominal_power</span>
+<a id="__codelineno-30-75" name="__codelineno-30-75" href="#__codelineno-30-75"></a><span class="w">                </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Rated Capacity</span>
+<a id="__codelineno-30-76" name="__codelineno-30-76" href="#__codelineno-30-76"></a><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.minuteman_status</span>
+<a id="__codelineno-30-77" name="__codelineno-30-77" href="#__codelineno-30-77"></a><span class="w">                </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Status</span>
+<a id="__codelineno-30-78" name="__codelineno-30-78" href="#__codelineno-30-78"></a><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.minuteman_status_data</span>
+<a id="__codelineno-30-79" name="__codelineno-30-79" href="#__codelineno-30-79"></a><span class="w">                </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Raw Status</span>
+<a id="__codelineno-30-80" name="__codelineno-30-80" href="#__codelineno-30-80"></a><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.minuteman_battery_voltage</span>
+<a id="__codelineno-30-81" name="__codelineno-30-81" href="#__codelineno-30-81"></a><span class="w">                </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Battery Voltage</span>
+<a id="__codelineno-30-82" name="__codelineno-30-82" href="#__codelineno-30-82"></a>
+<a id="__codelineno-30-83" name="__codelineno-30-83" href="#__codelineno-30-83"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">grid</span>
+<a id="__codelineno-30-84" name="__codelineno-30-84" href="#__codelineno-30-84"></a><span class="w">        </span><span class="nt">columns</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<a id="__codelineno-30-85" name="__codelineno-30-85" href="#__codelineno-30-85"></a><span class="w">        </span><span class="nt">cards</span><span class="p">:</span>
+<a id="__codelineno-30-86" name="__codelineno-30-86" href="#__codelineno-30-86"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">history-graph</span>
+<a id="__codelineno-30-87" name="__codelineno-30-87" href="#__codelineno-30-87"></a><span class="w">            </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Input Voltage (8h)</span>
+<a id="__codelineno-30-88" name="__codelineno-30-88" href="#__codelineno-30-88"></a><span class="w">            </span><span class="nt">hours_to_show</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
+<a id="__codelineno-30-89" name="__codelineno-30-89" href="#__codelineno-30-89"></a><span class="w">            </span><span class="nt">entities</span><span class="p">:</span>
+<a id="__codelineno-30-90" name="__codelineno-30-90" href="#__codelineno-30-90"></a><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.minuteman_input_voltage</span>
+<a id="__codelineno-30-91" name="__codelineno-30-91" href="#__codelineno-30-91"></a><span class="w">                </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Input Voltage</span>
+<a id="__codelineno-30-92" name="__codelineno-30-92" href="#__codelineno-30-92"></a>
+<a id="__codelineno-30-93" name="__codelineno-30-93" href="#__codelineno-30-93"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">grid</span>
+<a id="__codelineno-30-94" name="__codelineno-30-94" href="#__codelineno-30-94"></a><span class="w">        </span><span class="nt">columns</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<a id="__codelineno-30-95" name="__codelineno-30-95" href="#__codelineno-30-95"></a><span class="w">        </span><span class="nt">cards</span><span class="p">:</span>
+<a id="__codelineno-30-96" name="__codelineno-30-96" href="#__codelineno-30-96"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">history-graph</span>
+<a id="__codelineno-30-97" name="__codelineno-30-97" href="#__codelineno-30-97"></a><span class="w">            </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Output Voltage (8h)</span>
+<a id="__codelineno-30-98" name="__codelineno-30-98" href="#__codelineno-30-98"></a><span class="w">            </span><span class="nt">hours_to_show</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
+<a id="__codelineno-30-99" name="__codelineno-30-99" href="#__codelineno-30-99"></a><span class="w">            </span><span class="nt">entities</span><span class="p">:</span>
+<a id="__codelineno-30-100" name="__codelineno-30-100" href="#__codelineno-30-100"></a><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.minuteman_output_voltage</span>
+<a id="__codelineno-30-101" name="__codelineno-30-101" href="#__codelineno-30-101"></a><span class="w">                </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Output Voltage</span>
+<a id="__codelineno-30-102" name="__codelineno-30-102" href="#__codelineno-30-102"></a>
+<a id="__codelineno-30-103" name="__codelineno-30-103" href="#__codelineno-30-103"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">grid</span>
+<a id="__codelineno-30-104" name="__codelineno-30-104" href="#__codelineno-30-104"></a><span class="w">        </span><span class="nt">columns</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<a id="__codelineno-30-105" name="__codelineno-30-105" href="#__codelineno-30-105"></a><span class="w">        </span><span class="nt">cards</span><span class="p">:</span>
+<a id="__codelineno-30-106" name="__codelineno-30-106" href="#__codelineno-30-106"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">history-graph</span>
+<a id="__codelineno-30-107" name="__codelineno-30-107" href="#__codelineno-30-107"></a><span class="w">            </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Output Wattage (8h)</span>
+<a id="__codelineno-30-108" name="__codelineno-30-108" href="#__codelineno-30-108"></a><span class="w">            </span><span class="nt">hours_to_show</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
+<a id="__codelineno-30-109" name="__codelineno-30-109" href="#__codelineno-30-109"></a><span class="w">            </span><span class="nt">entities</span><span class="p">:</span>
+<a id="__codelineno-30-110" name="__codelineno-30-110" href="#__codelineno-30-110"></a><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.minuteman_output_wattage</span>
+<a id="__codelineno-30-111" name="__codelineno-30-111" href="#__codelineno-30-111"></a><span class="w">                </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Output Watts</span>
+<a id="__codelineno-30-112" name="__codelineno-30-112" href="#__codelineno-30-112"></a>
+<a id="__codelineno-30-113" name="__codelineno-30-113" href="#__codelineno-30-113"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">grid</span>
+<a id="__codelineno-30-114" name="__codelineno-30-114" href="#__codelineno-30-114"></a><span class="w">        </span><span class="nt">columns</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<a id="__codelineno-30-115" name="__codelineno-30-115" href="#__codelineno-30-115"></a><span class="w">        </span><span class="nt">cards</span><span class="p">:</span>
+<a id="__codelineno-30-116" name="__codelineno-30-116" href="#__codelineno-30-116"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">history-graph</span>
+<a id="__codelineno-30-117" name="__codelineno-30-117" href="#__codelineno-30-117"></a><span class="w">            </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Load % (8h)</span>
+<a id="__codelineno-30-118" name="__codelineno-30-118" href="#__codelineno-30-118"></a><span class="w">            </span><span class="nt">hours_to_show</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
+<a id="__codelineno-30-119" name="__codelineno-30-119" href="#__codelineno-30-119"></a><span class="w">            </span><span class="nt">entities</span><span class="p">:</span>
+<a id="__codelineno-30-120" name="__codelineno-30-120" href="#__codelineno-30-120"></a><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.minuteman_load</span>
+<a id="__codelineno-30-121" name="__codelineno-30-121" href="#__codelineno-30-121"></a><span class="w">                </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Load</span>
+</code></pre></div>
+{% endraw %}</p>
+<hr />
+<h2 id="proxmox-vmlxc-startup-shutdown-order">Proxmox VM/LXC Startup &amp; Shutdown Order<a class="headerlink" href="#proxmox-vmlxc-startup-shutdown-order" title="Permanent link">&para;</a></h2>
+<p>Proxmox starts VMs/LXCs in <strong>ascending</strong> order and shuts them down in <strong>descending</strong> order.</p>
+<p>The NUT clients on Stage 1 and Stage 2 machines handle their own shutdown <strong>before</strong> Proxmox begins its shutdown sequence. The Proxmox ordering below is therefore optimized primarily for <strong>startup order</strong> (ensuring dependencies are ready before dependents), with NUT providing the safety net for correct shutdown ordering.</p>
+<p>To set these values: click each VM/LXC in Proxmox → <strong>Options</strong> → <strong>Start/Shutdown Order</strong></p>
+<table>
+<thead>
+<tr>
+<th>Order</th>
+<th>ID</th>
+<th>Name</th>
+<th>Type</th>
+<th>Startup Delay</th>
+<th>Shutdown Timeout</th>
+<th>NUT Client</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>101</td>
+<td>postgresql</td>
+<td>LXC</td>
+<td>0s</td>
+<td>20s</td>
+<td>No (Proxmox handles)</td>
+</tr>
+<tr>
+<td>20</td>
+<td>102</td>
+<td>uptimekuma</td>
+<td>LXC</td>
+<td>45s</td>
+<td>20s</td>
+<td>No (Proxmox handles)</td>
+</tr>
+<tr>
+<td>20</td>
+<td>1600</td>
+<td>proxy/NPM</td>
+<td>LXC</td>
+<td>45s</td>
+<td>20s</td>
+<td>No (Proxmox handles)</td>
+</tr>
+<tr>
+<td>30</td>
+<td>103</td>
+<td>ubuntu</td>
+<td>LXC</td>
+<td>90s</td>
+<td>20s</td>
+<td>No (Proxmox handles)</td>
+</tr>
+<tr>
+<td>30</td>
+<td>1000</td>
+<td>homeassistant</td>
+<td>VM</td>
+<td>90s</td>
+<td>60s</td>
+<td>No (Proxmox handles)</td>
+</tr>
+<tr>
+<td>40</td>
+<td>1200</td>
+<td>truenas</td>
+<td>VM</td>
+<td>135s</td>
+<td>60s</td>
+<td>Yes — 600s (Stage 2)</td>
+</tr>
+<tr>
+<td>50</td>
+<td>110</td>
+<td>seerr</td>
+<td>LXC</td>
+<td>180s</td>
+<td>20s</td>
+<td>No (Proxmox handles)</td>
+</tr>
+<tr>
+<td>50</td>
+<td>120</td>
+<td>sonarr</td>
+<td>LXC</td>
+<td>180s</td>
+<td>20s</td>
+<td>Yes — 900s (Stage 1)</td>
+</tr>
+<tr>
+<td>50</td>
+<td>130</td>
+<td>radarr</td>
+<td>LXC</td>
+<td>180s</td>
+<td>20s</td>
+<td>Yes — 900s (Stage 1)</td>
+</tr>
+<tr>
+<td>50</td>
+<td>140</td>
+<td>qbittorrent</td>
+<td>LXC</td>
+<td>180s</td>
+<td>20s</td>
+<td>Yes — 900s (Stage 1)</td>
+</tr>
+<tr>
+<td>50</td>
+<td>150</td>
+<td>recyclarr</td>
+<td>LXC</td>
+<td>180s</td>
+<td>20s</td>
+<td>No (Proxmox handles)</td>
+</tr>
+<tr>
+<td>50</td>
+<td>1100</td>
+<td>immich</td>
+<td>VM</td>
+<td>180s</td>
+<td>60s</td>
+<td>Yes — 900s (Stage 1)</td>
+</tr>
+<tr>
+<td>60</td>
+<td>1400</td>
+<td>qbit2</td>
+<td>VM</td>
+<td>225s</td>
+<td>60s</td>
+<td>Yes — 900s (WinNUT)</td>
+</tr>
+<tr>
+<td>70</td>
+<td>1300</td>
+<td>motherboard</td>
+<td>VM</td>
+<td>270s</td>
+<td>60s</td>
+<td>No (currently off)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Startup delay note:</strong> TrueNAS (order 40, 135s delay) must be fully booted and shares mounted before the media apps at order 50 (180s delay) start. Adjust the delay if TrueNAS takes longer than ~45 seconds to fully mount its pools on your hardware.</p>
+</blockquote>
+<hr />
+<h2 id="opnsense-firewall-rule">OPNsense Firewall Rule<a class="headerlink" href="#opnsense-firewall-rule" title="Permanent link">&para;</a></h2>
+<p>If Home Assistant and the Raspberry Pi NUT server are on <strong>different VLANs</strong>, add a firewall rule in OPNsense to allow HA to reach NUT.</p>
+<h3 id="rule-settings">Rule Settings<a class="headerlink" href="#rule-settings" title="Permanent link">&para;</a></h3>
+<p>Go to <strong>Firewall → Rules → \&lt;HA VLAN interface&gt;</strong> and add:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Action</td>
+<td>Pass</td>
+</tr>
+<tr>
+<td>Interface</td>
+<td>HA's VLAN interface (traffic originates here)</td>
+</tr>
+<tr>
+<td>Protocol</td>
+<td>TCP</td>
+</tr>
+<tr>
+<td>Source</td>
+<td>HA's IP or subnet</td>
+</tr>
+<tr>
+<td>Destination</td>
+<td>Raspberry Pi IP</td>
+</tr>
+<tr>
+<td>Destination Port</td>
+<td>3493</td>
+</tr>
+<tr>
+<td>Description</td>
+<td>Allow HA to NUT server</td>
+</tr>
+</tbody>
+</table>
+<p>OPNsense is stateful by default — you only need this one rule. Return traffic is permitted automatically.</p>
+<blockquote>
+<p><strong>Also check:</strong> If any other NUT clients (Proxmox, LXCs) are on different VLANs from the Pi, add equivalent rules for each. All NUT clients communicate with the Pi on port <strong>3493/TCP</strong>.</p>
+</blockquote>
+<hr />
+<p><em>Last updated: March 2026</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
