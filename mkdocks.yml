@@ -1,0 +1,35 @@
+site_name: Homelab Documentation
+site_description: Personal homelab infrastructure documentation
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: indigo
+    accent: indigo
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - NUT UPS Setup:
+    - Overview: nut/index.md
+    - NUT Server (Pi): nut/server.md
+    - NUT Clients: nut/clients.md
+    - Home Assistant: nut/homeassistant.md
+    - Proxmox Shutdown Order: nut/proxmox.md
